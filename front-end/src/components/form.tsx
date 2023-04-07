@@ -136,7 +136,7 @@ const UserForm: React.FC = () => {
       name="register"
       onFinish={onFinish}
       initialValues={{ residence: ['zhejiang', 'hangzhou', 'xihu'], prefix: '86' }}
-      style={{ maxWidth: 600 }}
+      style={{ maxWidth: 600, margin: '0 auto' }}
       scrollToFirstError
     >
       <Form.Item

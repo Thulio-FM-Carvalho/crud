@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../index.css';
 import { Space, Table, Tag, Button } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
@@ -30,6 +30,7 @@ const columns: ColumnsType<DataType> = [
     dataIndex: 'tipoDePessoa',
     key: 'tipoDePessoa',
     render: (text) => <a>{text}</a>,
+
   },
   {
     title: 'Nome / Razão Social',
@@ -52,13 +53,14 @@ const columns: ColumnsType<DataType> = [
     key: 'acao',
     render: (_, record) => (
       <Space size="middle">
-        <Link to={`/editar/${record.id}`}>Editar {record.nomeRazaoSocial}</Link>
+        <Link to={`/editar/${record.id}`}>Editar</Link>
         <a>Remover</a>
       </Space>
     ),
   },
 ];
 
+/*
 const data: DataType[] = [
   {
     key: '1',
@@ -77,16 +79,24 @@ const data: DataType[] = [
     endereco: 'Rua copacaíba, n 14'
   },
 ];
-
-
-
-
+*/
 
 const UserList: React.FC = () => {
+  const [users, setUsers] = useState<DataType[]>([]);
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:5000/users')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setUsers(data);
+      });
+  }, []);
+
   return (
     <div>
       <Header/>
-      <Table columns={columns} dataSource={data} />;
+      <Table columns={columns} dataSource={users} />;
     </div>
   )
 }
