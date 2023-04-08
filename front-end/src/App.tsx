@@ -1,6 +1,7 @@
 import React from 'react';
 import UserList from './components/userList';
 import Form from './components/form';
+import EditUser from './components/editUser';
 import { Layout } from 'antd';
 import { Button } from 'antd';
 import {
@@ -17,7 +18,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/editar/:id",
-    element: <Form />,
+    element: <EditUser />,
   },
   {
     path: "/add/",

@@ -94,6 +94,17 @@ const UserForm: React.FC = () => {
 
   const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
+
+    const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(values)
+  };
+
+  fetch('http://127.0.0.1:5000/add', requestOptions)
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.log(error));
   };
 
   const prefixSelector = (
@@ -202,6 +213,14 @@ const UserForm: React.FC = () => {
       <Form.Item
         name="estado"
         label="Estado"
+        rules={[{ required: true, message: 'Please input your phone number!' }]}
+      >
+        <Input/>
+      </Form.Item>
+
+      <Form.Item
+        name="telefone"
+        label="Telefone"
         rules={[{ required: true, message: 'Please input your phone number!' }]}
       >
         <Input/>

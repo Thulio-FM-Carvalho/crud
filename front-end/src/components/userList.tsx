@@ -15,14 +15,19 @@ interface DataType {
   nomeRazaoSocial: string;
   identificacao: string;
   endereco: string;
+  bairro: string;
+  cidade: string;
+  cep: string;
+  estado: string;
+  telefone: string;
 }
 
 
 const columns: ColumnsType<DataType> = [
   {
     title: 'Codigo',
-    dataIndex: 'id',
-    key: 'id',
+    dataIndex: 'codigo',
+    key: 'codigo',
     render: (text) => <a>{text}</a>,
   },
   {
@@ -47,6 +52,31 @@ const columns: ColumnsType<DataType> = [
     title: 'Endereço',
     dataIndex: 'endereco',
     key: 'endereco',
+  },
+  {
+    title: 'Bairro',
+    dataIndex: 'bairro',
+    key: 'bairro',
+  },
+  {
+    title: 'Cidade',
+    dataIndex: 'cidade',
+    key: 'cidade',
+  },
+  {
+    title: 'CEP',
+    dataIndex: 'cep',
+    key: 'cep',
+  },
+  {
+    title: 'Estado',
+    dataIndex: 'estado',
+    key: 'estado',
+  },
+  {
+    title: 'Telefone',
+    dataIndex: 'telefone',
+    key: 'telefone',
   },
   {
     title: 'Ação',
