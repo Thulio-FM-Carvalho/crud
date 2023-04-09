@@ -10,7 +10,7 @@ import Header from './header';
 
 interface DataType {
   key: string;
-  id: number;
+  codigo: number;
   tipoDePessoa: string;
   nomeRazaoSocial: string;
   identificacao: string;
@@ -23,7 +23,41 @@ interface DataType {
 }
 
 
-const columns: ColumnsType<DataType> = [
+
+
+
+
+const UserList: React.FC = () => {
+  const [users, setUsers] = useState<DataType[]>([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:5000/users')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setUsers(data);
+      });
+  }, []);
+
+  const handleRemover = (id: number) => {
+      fetch(`http://127.0.0.1:5000/user/${id}`, {
+        method: 'DELETE',
+      })
+      .then(() => {
+    fetch('http://127.0.0.1:5000/users')
+      .then((response) => response.json())
+      .then((data) => {
+        setUsers(data);
+
+      });
+  })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    };
+
+  const columns: ColumnsType<DataType> = [
   {
     title: 'Codigo',
     dataIndex: 'codigo',
@@ -83,45 +117,12 @@ const columns: ColumnsType<DataType> = [
     key: 'acao',
     render: (_, record) => (
       <Space size="middle">
-        <Link to={`/editar/${record.id}`}>Editar</Link>
-        <a>Remover</a>
+        <Link to={`/editar/${record.codigo}`}>Editar</Link>
+        <a onClick={() => handleRemover(record.codigo)}>Remover</a>
       </Space>
     ),
   },
 ];
-
-/*
-const data: DataType[] = [
-  {
-    key: '1',
-    id: 1,
-    tipoDePessoa: 'Fisica',
-    nomeRazaoSocial: 'Thulio Freires Maia',
-    identificacao: '06319293128',
-    endereco: 'New York No. 1 Lake Park'
-  },
-  {
-    key: '2',
-    id: 2,
-    tipoDePessoa: 'Juridica',
-    nomeRazaoSocial: 'Jamel Pereira Chaves Eirelli',
-    identificacao: '091002280400152',
-    endereco: 'Rua copacaíba, n 14'
-  },
-];
-*/
-
-const UserList: React.FC = () => {
-  const [users, setUsers] = useState<DataType[]>([]);
-
-  useEffect(() => {
-    fetch('http://127.0.0.1:5000/users')
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setUsers(data);
-      });
-  }, []);
 
   return (
     <div>

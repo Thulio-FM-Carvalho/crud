@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, jsonify
 from pydantic import ValidationError
 from app import app
 from service import Service
@@ -16,7 +16,7 @@ def add_user():
     print(data)
     try:
         form = UserForm(**data)
-        service.send_data(form)
+        service.send_user_data(form)
     except ValidationError as e:
         return {
                    'title': 'Erro de validação',
@@ -31,36 +31,60 @@ def add_user():
 
 
 @app.route('/users', methods=['GET'])
-def get_user():
-    user_data = service.get_data()
+@cross_origin()
+def get_users():
+    user_data = service.get_users_data()
     records = [z.to_json() for z in user_data]
     return records, 200
 
-    """return [
-    {
-      "key": "1",
-      "id": 1,
-      "tipoDePessoa": "Fisica",
-      "nomeRazaoSocial": "Thulaaaaio Freires Maia",
-      "identificacao": "1313",
-      "endereco": "New York No. 1 Lake Park"
-    },
-    {
-      "key": "2",
-      "id": 2,
-      "tipoDePessoa": "Juridica",
-      "nomeRazaoSocial": "Jamel Pereira Chaves Eirelli",
-      "identificacao": "091002280400152",
-      "endereco": "Rua copacaíba, n 14"
-    }
-  ]"""
+
+@app.route('/user/<int:id>', methods=['GET'])
+@cross_origin()
+def get_user(id):
+    user = service.get_user_data(id)
+    records = user.to_json()
+    print(records)
+    return records
 
 
-@app.route('/update', methods=['PUT'])
-def update_user():
-    pass
+@app.route('/update/<int:id>', methods=['PUT'])
+@cross_origin()
+def update_user(id):
+    data = request.get_json()
+    tipo_de_pessoa = data['tipoDePessoa']
+    nome_razao_social = data['nomeRazaoSocial']
+    identificacao = data['identificacao']
+    endereco = data['endereco']
+    bairro = data['bairro']
+    cidade = data['cidade']
+    cep = data['cep']
+    estado = data['estado']
+    telefone = data['telefone']
+
+    service.update_user_data(id, tipo_de_pessoa, nome_razao_social, identificacao, endereco, bairro, cidade, cep,
+                             estado, telefone)
+
+    return "", 200
 
 
-@app.route('/delete', methods=['DELETE'])
-def delete_user():
-    pass
+@app.route('/user/<int:user_id>', methods=['DELETE'])
+@cross_origin()
+def delete_user(user_id):
+    bool = service.del_user_data(user_id)
+
+    if bool:
+        return "", 204
+    else:
+        return "", 404
+
+
+@app.route('/user', methods=['GET'])
+@cross_origin()
+def get_existing_user():
+    identificacao = request.args.get('identificacao')
+    result = service.check_existing_user(identificacao)
+    print(result)
+
+    return jsonify({'existePessoa': result})
+
+

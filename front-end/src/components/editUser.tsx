@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Input, Button, Space } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams  } from 'react-router-dom';
 
 interface Props {
   id?: number;
@@ -11,30 +11,50 @@ const layout = {
   wrapperCol: { span: 12 },
 };
 
-const EditUser: React.FC<Props> = ({ id }) => {
-  const [user, setUser] = useState({});
+const EditUser: React.FC<Props> = () => {
+  const [user, setUser] = useState({
+  tipoDePessoa: '',
+  nomeRazaoSocial: '',
+  identificacao: '',
+  endereco: '',
+  bairro: '',
+  cidade: '',
+  cep: '',
+  estado: '',
+  telefone: '',
+});
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { id } = useParams<{id: string}>();
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:5000/users/${id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setUser(data);
-      });
+    if (id) {
+      setIsLoading(true);
+      fetch(`http://127.0.0.1:5000/user/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setUser(data);
+          console.log("DADOS VINDO DA API", data)
+          setIsLoading(false);
+        });
+    }
   }, [id]);
+
+  if (isLoading) {
+    return <div>Carregando...</div>;
+  }
 
   const handleUpdateUser = (values: any) => {
     setIsLoading(true);
-    fetch(`http://127.0.0.1:5000/users/${id}`, {
+    console.log(values)
+    fetch(`http://127.0.0.1:5000/update/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(values),
     })
       .then(() => {
         setIsLoading(false);
-        navigate('/users');
+        navigate('/');
       })
       .catch((error) => {
         console.error('Error:', error);

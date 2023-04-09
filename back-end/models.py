@@ -15,7 +15,7 @@ class User(db.Model):
     telefone = db.Column(db.String(20), nullable=False)
 
     def __repr__(self):
-        return '<Name %r>' % self.nome
+        return '<tipoDePessoa %r>' % self.tipoDePessoa
 
     def to_json(self):
         return {

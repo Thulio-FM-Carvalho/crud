@@ -3,7 +3,7 @@ import '../index.css';
 import type { CascaderProps } from 'antd';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-import { Space } from 'antd';
+import { Space, message } from 'antd';
 import {
   AutoComplete,
   Button,
@@ -92,7 +92,7 @@ const UserForm: React.FC = () => {
   };
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
     console.log('Received values of form: ', values);
 
     const requestOptions = {
@@ -101,11 +101,26 @@ const UserForm: React.FC = () => {
     body: JSON.stringify(values)
   };
 
-  fetch('http://127.0.0.1:5000/add', requestOptions)
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.log(error));
-  };
+  //verificando se o CPF já existe no banco de dados
+  //disparando requisição na API passandro como parametro a identificação e a response será True ou Flase
+  //Se (True), existe o CPF/CNPJ no Banco de dados, imprime a mensagem de aviso
+  //Se (False) dispara a requisição para API passando os dados do formulário para o cadastro
+  const response = await fetch(`http://127.0.0.1:5000/user?identificacao=${values.identificacao}`);
+  const data = await response.json();
+      if (data.existePessoa) {
+        console.log(data.existePessoa)
+        message.error('Pessoa já existe no banco de dados');
+      } else {
+        // envia o formulário para o servidor
+        fetch('http://127.0.0.1:5000/add', requestOptions)
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.log(error));
+        navigate('/');
+      };
+  }
+
+
 
   const prefixSelector = (
     <Form.Item name="prefix" noStyle>
