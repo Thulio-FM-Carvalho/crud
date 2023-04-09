@@ -1,22 +1,16 @@
 import React, { useState } from 'react';
 import '../index.css';
-import type { CascaderProps } from 'antd';
 import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import { Space, message } from 'antd';
+import InputMask from 'react-input-mask';
 import {
   AutoComplete,
   Button,
-  Cascader,
-  Checkbox,
-  Col,
   Form,
   Input,
-  InputNumber,
-  Row,
   Select,
 } from 'antd';
-
 
 const { Option } = Select;
 
@@ -26,63 +20,9 @@ interface DataNodeType {
   children?: DataNodeType[];
 }
 
-const residences: CascaderProps<DataNodeType>['options'] = [
-  {
-    value: 'zhejiang',
-    label: 'Zhejiang',
-    children: [
-      {
-        value: 'hangzhou',
-        label: 'Hangzhou',
-        children: [
-          {
-            value: 'xihu',
-            label: 'West Lake',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: 'jiangsu',
-    label: 'Jiangsu',
-    children: [
-      {
-        value: 'nanjing',
-        label: 'Nanjing',
-        children: [
-          {
-            value: 'zhonghuamen',
-            label: 'Zhong Hua Men',
-          },
-        ],
-      },
-    ],
-  },
-];
-
 const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 8 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 16 },
-  },
-};
-
-const tailFormItemLayout = {
-  wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0,
-    },
-    sm: {
-      span: 16,
-      offset: 8,
-    },
-  },
+  labelCol: { span: 6 },
+  wrapperCol: { span: 12 },
 };
 
 const UserForm: React.FC = () => {
@@ -109,7 +49,7 @@ const UserForm: React.FC = () => {
   const data = await response.json();
       if (data.existePessoa) {
         console.log(data.existePessoa)
-        message.error('Pessoa já existe no banco de dados');
+        message.error('CPF/CNPJ já existente no Banco de dados.');
       } else {
         // envia o formulário para o servidor
         fetch('http://127.0.0.1:5000/add', requestOptions)
@@ -120,137 +60,132 @@ const UserForm: React.FC = () => {
       };
   }
 
-
-
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select style={{ width: 70 }}>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    </Form.Item>
-  );
-
-  const suffixSelector = (
-    <Form.Item name="suffix" noStyle>
-      <Select style={{ width: 70 }}>
-        <Option value="USD">$</Option>
-        <Option value="CNY">¥</Option>
-      </Select>
-    </Form.Item>
-  );
-
   const [autoCompleteResult, setAutoCompleteResult] = useState<string[]>([]);
 
-  const onWebsiteChange = (value: string) => {
-    if (!value) {
-      setAutoCompleteResult([]);
-    } else {
-      setAutoCompleteResult(['.com', '.org', '.net'].map((domain) => `${value}${domain}`));
-    }
-  };
-
-  const websiteOptions = autoCompleteResult.map((website) => ({
-    label: website,
-    value: website,
-  }));
-
   return (
-    <Form
-      {...formItemLayout}
-      form={form}
-      name="register"
-      onFinish={onFinish}
-      initialValues={{ residence: ['zhejiang', 'hangzhou', 'xihu'], prefix: '86' }}
-      style={{ maxWidth: 600, margin: '0 auto' }}
-      scrollToFirstError
-    >
-      <Form.Item
-        name="tipoDePessoa"
-        label="Tipo de pessoa"
-        rules={[{ required: true, message: 'Por favor, selecione se é pesssoa física ou jurídica!' }]}
-      >
-        <Select placeholder="Selecione o tipo de pessoa">
-          <Option value="fisica">Fisica</Option>
-          <Option value="juridica">Juridica</Option>
-        </Select>
-      </Form.Item>
+    <div>
+        <h1>CADASTRAR USUÁRIO</h1>
+        <Form {...formItemLayout}
+          form={form}
+          name="register"
+          onFinish={onFinish}
+          style={{ maxWidth: 800, margin: '0 auto' }}
+          scrollToFirstError>
 
-      <Form.Item
-        name="nomeRazaoSocial"
-        label="Nome"
-        tooltip="Como podemos te chamar?"
-        rules={[{ required: true, message: 'Por favor, digite seu nome!', whitespace: true }]}
-      >
-        <Input />
-      </Form.Item>
+          <Form.Item
+            name="tipoDePessoa"
+            label="Tipo de pessoa"
+            rules={[{ required: true, message: 'Por favor, selecione se é pesssoa física ou jurídica!' }]}>
+            <Select placeholder="Selecione o tipo de pessoa">
+              <Option value="Fisica">Fisica</Option>
+              <Option value="Juridica">Juridica</Option>
+            </Select>
+          </Form.Item>
 
-      <Form.Item
-        name="identificacao"
-        label="CPF / CNPJ"
-        rules={[{ required: true, message: 'Por favor, digite seu CPF ou CNPJ!' }]}
-      >
-        <Input/>
-      </Form.Item>
+          <Form.Item
+            name="nomeRazaoSocial"
+            label="Nome"
+            tooltip="Como podemos te chamar?"
+            rules={[{ required: true, message: 'Por favor, digite o nome!', whitespace: true }]}>
+            <Input maxLength={100}/>
+          </Form.Item>
 
-      <Form.Item
-        name="endereco"
-        label="Endereco"
-        rules={[{ required: true, message: 'Por favor, digite seu endereço!' }]}
-      >
-        <Input/>
-      </Form.Item>
+          <Form.Item
+            name="identificacao"
+            label="CPF / CNPJ"
+            rules={[{ required: true, message: 'Por favor, digite o CPF ou CNPJ!' },{ min: 11, message: 'O CPF/CNPJ deve ter no mínimo 11 caracteres!' },{ max: 15, message: 'O CPF/CNPJ deve ter no máximo 15 caracteres!' }]}>
+            <Input type="number"/>
+          </Form.Item>
 
-      <Form.Item
-        name="bairro"
-        label="Bairro"
-        rules={[{ required: true, message: 'Please input your phone number!' }]}
-      >
-        <Input/>
-      </Form.Item>
+          <Form.Item
+            name="endereco"
+            label="Endereço"
+            rules={[{ required: true, message: 'Por favor, digite o endereço!' }]}>
+            <Input maxLength={100}/>
+          </Form.Item>
 
-      <Form.Item
-        name="cidade"
-        label="Cidade"
-        rules={[{ required: true, message: 'Please input your phone number!' }]}
-      >
-        <Input/>
-      </Form.Item>
+          <Form.Item
+            name="bairro"
+            label="Bairro"
+            rules={[{ required: true, message: 'Por favor, digite o bairro!' }]}>
+            <Input maxLength={50}/>
+          </Form.Item>
 
-      <Form.Item
-        name="cep"
-        label="CEP"
-        rules={[{ required: true, message: 'Please input your phone number!' }]}
-      >
-        <Input/>
-      </Form.Item>
+          <Form.Item
+            name="cidade"
+            label="Cidade"
+            rules={[{ required: true, message: 'Por favor, digite a cidade!' }]}>
+            <Input maxLength={60}/>
+          </Form.Item>
 
-      <Form.Item
-        name="estado"
-        label="Estado"
-        rules={[{ required: true, message: 'Please input your phone number!' }]}
-      >
-        <Input/>
-      </Form.Item>
+          <Form.Item
+            name="cep"
+            label="CEP"
+            rules={[{ required: true, message: 'Por favor, digite o CEP da sua região!' },{ min: 8, message: 'O CEP deve ter no mínimo 8 caracteres!' },{ max: 8, message: 'O CEP deve ter no máximo 8 caracteres!' }]}>
+            <Input type="number"/>
+          </Form.Item>
 
-      <Form.Item
-        name="telefone"
-        label="Telefone"
-        rules={[{ required: true, message: 'Please input your phone number!' }]}
-      >
-        <Input/>
-      </Form.Item>
+          <Form.Item
+            name="estado"
+            label="Estado"
+            rules={[{ required: true, message: 'Por favor, digite o estado!' }]}>
+            <Input maxLength={14}/>
+          </Form.Item>
 
-      <Form.Item {...tailFormItemLayout}>
-      <Space size={20}>
-        <Button type="primary" htmlType="submit">
-          Salvar
-        </Button>
-        <Button type="primary" htmlType="submit" onClick={backButton}>Voltar</Button>
-        </Space>
-      </Form.Item>
-      
-    </Form>
+          <Form.Item
+            name="telefone"
+            label="Telefone"
+            rules={[
+                {
+                     required: true,
+                     message: 'Por favor, digite o telefone de contato!' },
+                {
+                     validator: (_, value) => {
+                        if (value && value.replace(/[^0-9]/g, '').length < 11) {
+                          return Promise.reject(new Error('Preencha o campo telefone por completo.'));
+                        }
+                        return Promise.resolve();
+                      },
+                    }
+                ]}>
+
+           <InputMask
+              mask="(99) 99999-9999"
+              maskChar="_"
+              className="ant-input"
+
+              style={{
+                boxSizing: "border-box",
+                margin: 0,
+                padding: "4px 11px",
+                color: "rgba(0, 0, 0, 0.88)",
+                fontSize: "14px",
+                lineHeight: "1.5714285714285714",
+                listStyle: "none",
+                fontFamily: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji'",
+                position: "relative",
+                display: "inline-block",
+                width: "100%",
+                minWidth: 0,
+                backgroundColor: "#ffffff",
+                backgroundImage: "none",
+                borderWidth: "1px",
+                borderStyle: "solid",
+                borderColor: "#d9d9d9",
+                borderRadius: "6px",
+                transition: "all 0.2s",
+              }}
+            />
+          </Form.Item>
+
+          <Form.Item wrapperCol={{ offset: 6 }}>
+              <Space size={20}>
+                <Button type="primary" htmlType="submit">Salvar</Button>
+                <Button type="primary" htmlType="submit" onClick={backButton}>Voltar</Button>
+              </Space>
+          </Form.Item>
+        </Form>
+    </div>
   );
 };
 

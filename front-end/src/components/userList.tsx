@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { EditOutlined } from '@ant-design/icons';
 import Header from './header';
 
-
 interface DataType {
   key: string;
   codigo: number;
@@ -22,10 +21,10 @@ interface DataType {
   telefone: string;
 }
 
-
-
-
-
+//função responsável por pegar o telefone e adicionar mascara para apresentar o telefone formatado na tabela
+const formatTelefone = (telefone: string) => {
+  return telefone.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3");
+}
 
 const UserList: React.FC = () => {
   const [users, setUsers] = useState<DataType[]>([]);
@@ -62,20 +61,16 @@ const UserList: React.FC = () => {
     title: 'Codigo',
     dataIndex: 'codigo',
     key: 'codigo',
-    render: (text) => <a>{text}</a>,
   },
   {
     title: 'Tipo de pessoa',
     dataIndex: 'tipoDePessoa',
     key: 'tipoDePessoa',
-    render: (text) => <a>{text}</a>,
-
   },
   {
     title: 'Nome / Razão Social',
     dataIndex: 'nomeRazaoSocial',
     key: 'nomeRazaoSocial',
-    render: (text) => <a>{text}</a>,
   },
   {
     title: 'CPF / CNPJ',
@@ -111,6 +106,7 @@ const UserList: React.FC = () => {
     title: 'Telefone',
     dataIndex: 'telefone',
     key: 'telefone',
+    render: (telefone: string) => formatTelefone(telefone),
   },
   {
     title: 'Ação',

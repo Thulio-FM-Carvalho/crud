@@ -15,8 +15,12 @@ class Service:
         estado = form_data.estado
         telefone = form_data.telefone
 
+        # removendo mascara do telefone
+        telefone_sem_mascara = telefone.replace("(", "").replace(")", "").replace("-", "").replace(" ", "")
+
         new_user = User(tipoDePessoa=tipoDePessoa, nomeRazaoSocial=nomeRazaoSocial, identificacao=identificacao,
-                        endereco=endereco, bairro=bairro, cidade=cidade, cep=cep, estado=estado, telefone=telefone)
+                        endereco=endereco, bairro=bairro, cidade=cidade, cep=cep, estado=estado,
+                        telefone=telefone_sem_mascara)
 
         db.session.add(new_user)
         db.session.commit()
@@ -27,11 +31,17 @@ class Service:
 
     def get_user_data(self, user_id):
         user = User.query.filter_by(codigo=user_id).first()
-        #print(user)
+        # print(user)
         return user
 
-    def update_user_data(self, id, tipo_de_pessoa, nome_razao_social, identificacao, endereco, bairro, cidade, cep, estado, telefone):
-        user = User.query.filter_by(codigo=id).update(dict(tipoDePessoa=tipo_de_pessoa, nomeRazaoSocial=nome_razao_social, identificacao=identificacao, endereco=endereco, bairro=bairro, cidade=cidade, cep=cep, estado=estado, telefone=telefone))
+    def update_user_data(self, id, tipo_de_pessoa, nome_razao_social, identificacao, endereco, bairro, cidade, cep,
+                         estado, telefone):
+
+        # removendo mascara do telefone
+        telefone_sem_mascara = telefone.replace("(", "").replace(")", "").replace("-", "").replace(" ", "")
+        user = User.query.filter_by(codigo=id).update(
+            dict(tipoDePessoa=tipo_de_pessoa, nomeRazaoSocial=nome_razao_social, identificacao=identificacao,
+                 endereco=endereco, bairro=bairro, cidade=cidade, cep=cep, estado=estado, telefone=telefone_sem_mascara))
         db.session.commit()
 
     def del_user_data(self, user_id):
@@ -49,5 +59,3 @@ class Service:
             return True
         else:
             return False
-
-
