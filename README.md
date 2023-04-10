@@ -45,8 +45,8 @@ Segue o Script usado no gif:
 ```
 CREATE TABLE users (
     codigo SERIAL PRIMARY KEY NOT NULL,
-    tipoDePessoa VARCHAR(10),
-    nomeRazaoSocial VARCHAR(100),
+    tipo_de_pessoa VARCHAR(10),
+    nome_razao_social VARCHAR(100),
     identificacao VARCHAR(14),
     endereco VARCHAR(100),
     bairro VARCHAR(50),
@@ -56,7 +56,7 @@ CREATE TABLE users (
     telefone VARCHAR(15)
 );
 
-INSERT INTO users (tipoDePessoa, nomeRazaoSocial, identificacao, endereco, bairro, cidade, cep, estado, telefone)
+INSERT INTO users (tipo_de_pessoa, nome_razao_social, identificacao, endereco, bairro, cidade, cep, estado, telefone)
 VALUES ('Física', 'João da Silva','06319295588', 'Rua das Flores, 123', 'Centro', 'São Paulo', '01234567', 'SP', '1198765432'); 3
 ```
 Após baixar o projeto, você pode abrir com o PyCharm. Para isso, na tela de launcher clique em:

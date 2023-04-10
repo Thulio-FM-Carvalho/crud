@@ -10,8 +10,8 @@ import Header from './header';
 interface DataType {
   key: string;
   codigo: number;
-  tipoDePessoa: string;
-  nomeRazaoSocial: string;
+  tipo_de_pessoa: string;
+  nome_razao_social: string;
   identificacao: string;
   endereco: string;
   bairro: string;
@@ -64,13 +64,13 @@ const UserList: React.FC = () => {
   },
   {
     title: 'Tipo de pessoa',
-    dataIndex: 'tipoDePessoa',
-    key: 'tipoDePessoa',
+    dataIndex: 'tipo_de_pessoa',
+    key: 'tipo_de_pessoa',
   },
   {
     title: 'Nome / Razão Social',
-    dataIndex: 'nomeRazaoSocial',
-    key: 'nomeRazaoSocial',
+    dataIndex: 'nome_razao_social',
+    key: 'nome_razao_social',
   },
   {
     title: 'CPF / CNPJ',

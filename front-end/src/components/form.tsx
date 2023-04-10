@@ -73,7 +73,7 @@ const UserForm: React.FC = () => {
           scrollToFirstError>
 
           <Form.Item
-            name="tipoDePessoa"
+            name="tipo_de_pessoa"
             label="Tipo de pessoa"
             rules={[{ required: true, message: 'Por favor, selecione se é pesssoa física ou jurídica!' }]}>
             <Select placeholder="Selecione o tipo de pessoa">
@@ -83,7 +83,7 @@ const UserForm: React.FC = () => {
           </Form.Item>
 
           <Form.Item
-            name="nomeRazaoSocial"
+            name="nome_razao_social"
             label="Nome"
             tooltip="Como podemos te chamar?"
             rules={[{ required: true, message: 'Por favor, digite o nome!', whitespace: true }]}>

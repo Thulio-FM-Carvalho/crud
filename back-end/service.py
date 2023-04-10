@@ -6,8 +6,8 @@ class Service:
 
     # função responsável por criar um usuario no banco de dados passando os dados recebidos como parametro
     def send_user_data(self, form_data):
-        tipoDePessoa = form_data.tipoDePessoa
-        nomeRazaoSocial = form_data.nomeRazaoSocial
+        tipo_de_pessoa = form_data.tipo_de_pessoa
+        nome_razao_social = form_data.nome_razao_social
         identificacao = form_data.identificacao
         endereco = form_data.endereco
         bairro = form_data.bairro
@@ -20,7 +20,7 @@ class Service:
         telefone_sem_mascara = telefone.replace("(", "").replace(")", "").replace("-", "").replace(" ", "")
 
         # executando a query de criação de um novo usuario passando os dados como parametro
-        new_user = User(tipoDePessoa=tipoDePessoa, nomeRazaoSocial=nomeRazaoSocial, identificacao=identificacao,
+        new_user = User(tipo_de_pessoa=tipo_de_pessoa, nome_razao_social=nome_razao_social, identificacao=identificacao,
                         endereco=endereco, bairro=bairro, cidade=cidade, cep=cep, estado=estado,
                         telefone=telefone_sem_mascara)
 
@@ -58,7 +58,7 @@ class Service:
 
         # executando a query de atualização dos dados passando os novos valores
         user = User.query.filter_by(codigo=id).update(
-            dict(tipoDePessoa=tipo_de_pessoa, nomeRazaoSocial=nome_razao_social, identificacao=identificacao,
+            dict(tipo_de_pessoa=tipo_de_pessoa, nome_razao_social=nome_razao_social, identificacao=identificacao,
                  endereco=endereco, bairro=bairro, cidade=cidade, cep=cep, estado=estado,
                  telefone=telefone_sem_mascara))
 

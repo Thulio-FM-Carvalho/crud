@@ -72,8 +72,8 @@ def get_user(id):
 def update_user(id):
     # obtendo os dados recebidos
     data = request.get_json()
-    tipo_de_pessoa = data['tipoDePessoa']
-    nome_razao_social = data['nomeRazaoSocial']
+    tipo_de_pessoa = data['tipo_de_pessoa']
+    nome_razao_social = data['nome_razao_social']
     identificacao = data['identificacao']
     endereco = data['endereco']
     bairro = data['bairro']
