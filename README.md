@@ -81,12 +81,11 @@ Para executar a aplicação completa, siga estes passos:
 5. Abra o arquivo config.py dentro do subdiretório back-end e configure o acesso ao banco de dados que você criou anteriormente.
 6. Feito isso, clique com o botão direito do mouse no arquivo app.py e clique em ➤ Run 'app'.
 7. Agora, deixe o back-end rodando e abra um novo terminal no PyCharm.
-8. No novo terminal, digite ```cd ..``` para sair da pasta back-end.
-9. Digite ```cd .\front-end\``` para entrar na pasta raiz do front-end.
-10. Digite ```npm install``` para instalar todas as dependências da aplicação front-end.
-11. Digite ```npm start``` para iniciar a aplicação front-end.
-12. Aguarde a aplicação front-end iniciar e o navegador de internet abrir automaticamente com a aplicação em execução.
-13. Pronto, agora você pode testar a aplicação completa! Lembre-se de deixar o back-end rodando enquanto utiliza a aplicação front-end. Quando terminar, basta fechar os terminais e o PyCharm. 🏆🏆🏆
+8. Digite ```cd .\front-end\``` para entrar na pasta raiz do front-end.
+9. Digite ```npm install``` para instalar todas as dependências da aplicação front-end.
+10. Digite ```npm start``` para iniciar a aplicação front-end.
+11. Aguarde a aplicação front-end iniciar e o navegador de internet abrir automaticamente com a aplicação em execução.
+12. Pronto, agora você pode testar a aplicação completa! Lembre-se de deixar o back-end rodando enquanto utiliza a aplicação front-end. Quando terminar, basta fechar os terminais e o PyCharm. 🏆🏆🏆
 
 # Autores
 
