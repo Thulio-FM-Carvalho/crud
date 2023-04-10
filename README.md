@@ -57,7 +57,7 @@ CREATE TABLE users (
 );
 
 INSERT INTO users (tipo_de_pessoa, nome_razao_social, identificacao, endereco, bairro, cidade, cep, estado, telefone)
-VALUES ('Física', 'João da Silva','06319295588', 'Rua das Flores, 123', 'Centro', 'São Paulo', '01234567', 'SP', '1198765432'); 3
+VALUES ('Física', 'João da Silva','06319295588', 'Rua das Flores, 123', 'Centro', 'São Paulo', '01234567', 'SP', '1198765432');
 ```
 Com o banco de dados e a tabela criados, você pode prosseguir com a execução da aplicação.
 
