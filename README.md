@@ -38,8 +38,8 @@ e a linguagem Javascript usando a lib React para construção do Front-end. O pr
 - `React`
 - `antd`
 
-# Abrir e rodar o projeto
-Antes de tudo, será necessário criar um banco de dados no pgAdmin 4. Segue um GIF logo abaixo de como criar um banco de dados no pgAdmin 4:
+# Configurações para execução da aplicação
+Antes de tudo, é necessário criar um banco de dados no pgAdmin 4. Siga o exemplo do GIF logo abaixo de como criar um banco de dados no pgAdmin 4:
 ![GIF 10-04-2023 00-19-17](https://user-images.githubusercontent.com/48070981/230819590-4eb64269-8720-4681-a589-adc499fa0529.gif)
 Segue o Script usado no gif:
 ```
@@ -59,20 +59,34 @@ CREATE TABLE users (
 INSERT INTO users (tipo_de_pessoa, nome_razao_social, identificacao, endereco, bairro, cidade, cep, estado, telefone)
 VALUES ('Física', 'João da Silva','06319295588', 'Rua das Flores, 123', 'Centro', 'São Paulo', '01234567', 'SP', '1198765432'); 3
 ```
-Após baixar o projeto, você pode abrir com o PyCharm. Para isso, na tela de launcher clique em:
+Com o banco de dados e a tabela criados, você pode prosseguir com a execução da aplicação.
 
-- Open;
-- Procure o local onde o projeto está e o selecione (Caso o projeto seja baixado via zip, é necessário extraí-lo antes de procurá-lo);
-- Por fim clique em OK;
+Para abrir o projeto no PyCharm, siga os seguintes passos:
 
-Com o projeto aberto no pycharm, agora você pode observar a seguinte estrutura de pasta:
+1. Na tela de launcher do PyCharm, clique em "Open".
+2. Procure o local onde o projeto está salvo e selecione-o. Se o projeto foi baixado como um arquivo zip, é necessário extrair os arquivos antes de abri-lo no PyCharm.
+3. Clique em "OK" para abrir o projeto no PyCharm.
+
+Depois de abrir o projeto no PyCharm, você poderá observar a seguinte estrutura de pastas do projeto:
 
 ![image](https://user-images.githubusercontent.com/48070981/230822678-9ea93bf5-0f08-4555-90c0-634a8f9f2207.png)
 
-Agora abra o terminal do Pycharm, digite: ```cd .\back-end\``` para entrar na pasta raiz do back-end, digite: ```.\venv\Scripts\activate``` para ativar o ambiente virtual python e depois digite: ```pip install requirements.txt``` para instalar todas as dependências da aplicação back-end. Com as dependências instaladas, no subdiretório ```back-end``` abra o arquivo ```config.py``` configure o acesso do banco de dados que você acabou de criar no passo anterior. Feito as configurações, agora clique com o botão direito do mouse no arquivo ```app.py``` e clique em ```➤ Run 'app''``` . Feito isso, agora o back-end estará rodando.
 
-Agora abra o terminal do PyCharm, digite: ```deactivate``` para desativar o ambiente virtual python, digite ```cd ..```, depois ```cd .\front-end\ ``` para entrar na pasta raiz do front-end. Agora digite ```npm install``` para instalar todas as dependências da aplicação front-end. Com as dependências instaladas, agora digite ```npm start``` para inicar a aplicação front-end. Feito isso, será aberto automaticamente uma aba no seu navegador de internet com aplicação já em execução! Agora é só testar! 🏆🏆🏆
+Para executar a aplicação completa, siga estes passos:
 
+1. Abra o PyCharm e abra o terminal.
+2. No terminal, digite ```cd .\back-end\``` para entrar na pasta raiz do back-end.
+3. Digite ```.\venv\Scripts\activate``` para ativar o ambiente virtual Python. Caso o comando não funcionar, digite ```python -m venv venv``` para criar um ambiente virtual e depois digite ```.\venv\Scripts\activate``` para ativá-lo.
+4. Digite ```pip install -r requirements.txt``` para instalar todas as dependências da aplicação back-end.
+5. Abra o arquivo config.py dentro do subdiretório back-end e configure o acesso ao banco de dados que você criou anteriormente.
+6. Feito isso, clique com o botão direito do mouse no arquivo app.py e clique em ➤ Run 'app'.
+7. Agora, deixe o back-end rodando e abra um novo terminal no PyCharm.
+8. No novo terminal, digite ```cd ..``` para sair da pasta back-end.
+9. Digite ```cd .\front-end\``` para entrar na pasta raiz do front-end.
+10. Digite ```npm install``` para instalar todas as dependências da aplicação front-end.
+11. Digite ```npm start``` para iniciar a aplicação front-end.
+12. Aguarde a aplicação front-end iniciar e o navegador de internet abrir automaticamente com a aplicação em execução.
+13. Pronto, agora você pode testar a aplicação completa! Lembre-se de deixar o back-end rodando enquanto utiliza a aplicação front-end. Quando terminar, basta fechar os terminais e o PyCharm. 🏆🏆🏆
 
 # Autores
 

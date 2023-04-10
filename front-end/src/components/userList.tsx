@@ -123,7 +123,7 @@ const UserList: React.FC = () => {
   return (
     <div>
       <Header/>
-      <Table columns={columns} dataSource={users} />;
+      <Table columns={columns} dataSource={users} />
     </div>
   )
 }
