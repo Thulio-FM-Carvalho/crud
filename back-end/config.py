@@ -1,14 +1,14 @@
 import os
 
-SECRET_KEY = 'alura'
-#fazendo a conexão com o banco de
-SQLALCHEMY_DATABASE_URI = "postgresql://postgres:root@localhost:5432/crud"
+# USE ISSO
+SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI')
+
+# OU ISSO, FICA DE SUA ESCOLHA
 """SQLALCHEMY_DATABASE_URI = \
     '{SGBD}://{usuario}:{senha}@{servidor}/{database}'.format(
         SGBD = 'postgresql',
-        usuario = 'root',
-        senha = '',
+        usuario = 'usuario do banco de dados',
+        senha = 'senha da data base',
         servidor = 'localhost',
-        database = 'crud'
+        database = 'nome da data base'
     )"""
-#postgresql://user_managment_system_postgres_user:I6K0IsdFY3sEaagU7jNFk8OL8Ld2yA1q@dpg-cftvqa94reb6ks21gtmg-a.oregon-postgres.render.com/user_managment_system_postgres

@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 
 class User(db.Model):
+    __tablename__ = 'users'
     codigo = db.Column(db.Integer, primary_key=True, autoincrement=True)
     tipoDePessoa = db.Column(db.String(50), nullable=False)
     nomeRazaoSocial = db.Column(db.String(40), nullable=False)
